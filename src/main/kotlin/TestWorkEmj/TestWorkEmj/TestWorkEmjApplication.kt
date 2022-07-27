@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class TestWorkEmjApplication
 
 fun main(args: Array<String>) {
-
-	runApplication<TestWorkEmjApplication>(*args)
+    runApplication<TestWorkEmjApplication>(*args)
 }
