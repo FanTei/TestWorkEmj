@@ -7,6 +7,7 @@ import kotlin.random.Random
 import kotlin.streams.toList
 
 object SequencesGenerator {
+
     public fun generateFiveSequences(length: Int): List<IntArray> {
         val sequences: MutableList<IntArray> = mutableListOf()
         for (i in 0..4) {
