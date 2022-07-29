@@ -4,6 +4,7 @@ services:
   back-app:
     build:
       context: .
+      dockerfile: Dockerfile
     ports:
       - '9090:9090'
     expose:
@@ -12,7 +13,7 @@ services:
   front-app:
     build:
       context: .
-      dockerfile: EjmFront/Dockerfile
+      dockerfile: ./front/Dockerfile
     ports:
       - '3000:3000'
     expose:

@@ -3,7 +3,9 @@ FROM node:12
 ENV PORT 3000
 
 # Copying source files
-COPY . /usr/src/app
+COPY ./front /usr/src/app
+
+WORKDIR /usr/src/app
 
 # Building app
 RUN npm install
