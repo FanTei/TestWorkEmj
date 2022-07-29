@@ -25,7 +25,7 @@ class SequencesHandler : TextWebSocketHandler() {
                 val user = User(uids.getAndIncrement())
                 sessionList.put(session!!, user)
                 emit(session, Message("users", sessionList.values))
-                broadcastToOthers(session, Message("join", user))
+                broadcastToOthers(session, Message("connection", user))
             }
             "say" -> {
                 broadcast(Message("say", json.get("data").asText()))
@@ -35,6 +35,7 @@ class SequencesHandler : TextWebSocketHandler() {
             }
         }
     }
+
 
     fun emit(session: WebSocketSession, msg: Message) = session.sendMessage(TextMessage(jacksonObjectMapper().writeValueAsString(msg)))
     fun broadcast(msg: Message) = sessionList.forEach { emit(it.key, msg) }

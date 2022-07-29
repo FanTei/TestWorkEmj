@@ -39,42 +39,44 @@
 </div>
 
 <script>
-    //var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/chat");
+
     var webSocket = new SockJS('/chat');
-    webSocket.onmessage = function (msg) { receievMsg(JSON.parse(msg.data)) }
-    webSocket.onclose = function() { alert("Server Disconnect You"); }
-    webSocket.onopen = function() {sendMessage("connection",null);}
-    $("#auto").click(function () {
-        sendMessage("auto", $("#msg").val());
-    });
-
-    function sendMessage(type, data) {
-        if (data !== "") {
-            webSocket.send(JSON.stringify({type: type, data: data}));
-            $("#msg").val("");
-            $("#msg").focus();
-        }
-    }
-
-    function receievMsg(msg) {
-        if (msg.msgType == "auto") {
-            $("#numbers" +
-                "").append("<p>"+msg.data+"</p>");
-        }
-        else if (msg.msgType == "join") {
-            addUser(msg.data);
-        }
-        else if (msg.msgType == "users") {
-            msg.data.forEach(function(el) { addUser(el); });
-        }
-        else if (msg.msgType == "left") {
-            $("#user-"+msg.data.id).remove();
-        }
-    }
-
-    function addUser(user) {
-        $("#userlist").append("<li id='user-"+user.id+"'>"+user.name+"</li>");
-    }
+   // webSocket.onmessage = function (msg) { receievMsg(JSON.parse(msg.data)) }
+     webSocket.onclose = function() { alert("Server Disconnect You"); }
+    webSocket.onopen = function() {webSocket.send(JSON.stringify({type:"connection",data:null}))}
+    //webSocket.send(JSON.stringify({type:"connection",data:null}))
+   //
+   //  $("#auto").click(function () {
+   //      sendMessage("auto", $("#msg").val());
+   //  });
+   //
+   //  function sendMessage(type, data) {
+   //      if (data !== "") {
+   //          webSocket.send(JSON.stringify({type: type, data: data}));
+   //          $("#msg").val("");
+   //          $("#msg").focus();
+   //      }
+   //  }
+   //
+   //  function receievMsg(msg) {
+   //      if (msg.msgType == "auto") {
+   //          $("#numbers" +
+   //              "").append("<p>"+msg.data+"</p>");
+   //      }
+   //      else if (msg.msgType == "join") {
+   //          addUser(msg.data);
+   //      }
+   //      else if (msg.msgType == "users") {
+   //          msg.data.forEach(function(el) { addUser(el); });
+   //      }
+   //      else if (msg.msgType == "left") {
+   //          $("#user-"+msg.data.id).remove();
+   //      }
+   //  }
+   //
+   //  function addUser(user) {
+   //      $("#userlist").append("<li id='user-"+user.id+"'>"+user.name+"</li>");
+   //  }
 </script>
 </body>
 </html>

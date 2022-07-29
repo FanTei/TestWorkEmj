@@ -6,6 +6,6 @@ import org.springframework.web.socket.config.annotation.*
 @Configuration @EnableWebSocket
 class WSConfig : WebSocketConfigurer {
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(SequencesHandler(), "/chat").withSockJS()
+        registry.addHandler(SequencesHandler(), "/chat").setAllowedOrigins("http://localhost:3000").withSockJS()
     }
 }
