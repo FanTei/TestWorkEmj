@@ -1,5 +1,6 @@
 package TestWorkEmj.TestWorkEmj
 
+import TestWorkEmj.TestWorkEmj.handlrer.SequencesHandler
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.socket.config.annotation.*
 
