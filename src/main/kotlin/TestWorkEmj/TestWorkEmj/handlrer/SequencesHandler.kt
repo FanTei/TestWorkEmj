@@ -14,9 +14,8 @@ import java.util.concurrent.atomic.AtomicLong
 class SequencesHandler : TextWebSocketHandler() {
 
     private val sessionList = HashMap<WebSocketSession, User>()
-    private var uids = AtomicLong(0)
-
-    private val handlerContainer = HandlerContainer()
+    private var atomic = AtomicLong(0)
+    val handlerContainer = HandlerContainer()
 
     @Throws(Exception::class)
     override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
@@ -26,19 +25,22 @@ class SequencesHandler : TextWebSocketHandler() {
     public override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         val json: JsonNode = ObjectMapper().readTree(message?.payload)
         val type = json.get("type").asText()
-        if (type == "connection") {
-            val user = User(uids.getAndIncrement())
-            sessionList.put(session!!, user)
-            val v = sessionList.values
-            emit(session, Message("users", sessionList.values))
-        } else {
+        if(type=="connection")
+             {
+                val user = User(atomic.getAndIncrement())
+                sessionList.put(session!!, user)
+                emit(session, Message("users", sessionList.values))
+            }
+        else
+        {
             val data = json.get("data")
             handlerContainer.retrieveHandler(type)?.let { broadcast(it.handle(data)) }
         }
     }
 
-    private fun emit(session: WebSocketSession, msg: Message) =
+    fun emit(session: WebSocketSession, msg: Message) =
         session.sendMessage(TextMessage(jacksonObjectMapper().writeValueAsBytes(msg)))
 
-    private fun broadcast(msg: Message) = sessionList.forEach { emit(it.key, msg) }
+    fun broadcast(msg: Message) = sessionList.forEach { emit(it.key, msg) }
+
 }

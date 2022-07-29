@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  back-app:
+    build:
+      context: .
+    ports:
+      - '9090:9090'
+    expose:
+      - '9090'
+    restart: always
+  front-app:
+    build:
+      context: .
+      dockerfile: EjmFront/Dockerfile
+    ports:
+      - '3000:3000'
+    expose:
+      - '3000'
+    restart: always
